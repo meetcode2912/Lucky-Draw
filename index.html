@@ -1,0 +1,1067 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lucky Draw Lottery</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #3498db;
+            --secondary: #2ecc71;
+            --accent: #e74c3c;
+            --dark: #2c3e50;
+            --light: #ecf0f1;
+            --text: #333;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background-color: #f5f7fa;
+            color: var(--text);
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        /* Header Styles */
+        header {
+            background: linear-gradient(135deg, var(--primary), var(--dark));
+            color: white;
+            padding: 1rem 0;
+            box-shadow: var(--shadow);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+        
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 1.8rem;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+        }
+        
+        .logo i {
+            margin-right: 10px;
+            color: var(--secondary);
+        }
+        
+        nav ul {
+            display: flex;
+            list-style: none;
+        }
+        
+        nav ul li {
+            margin-left: 1.5rem;
+        }
+        
+        nav ul li a {
+            color: white;
+            text-decoration: none;
+            font-weight: 500;
+            transition: color 0.3s;
+            padding: 0.5rem;
+            border-radius: 4px;
+        }
+        
+        nav ul li a:hover {
+            color: var(--secondary);
+            background: rgba(255, 255, 255, 0.1);
+        }
+        
+        .auth-buttons {
+            display: flex;
+            gap: 10px;
+        }
+        
+        .btn {
+            padding: 0.5rem 1rem;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-primary {
+            background-color: var(--secondary);
+            color: white;
+        }
+        
+        .btn-primary:hover {
+            background-color: #27ae60;
+        }
+        
+        .btn-outline {
+            background-color: transparent;
+            border: 2px solid white;
+            color: white;
+        }
+        
+        .btn-outline:hover {
+            background-color: white;
+            color: var(--primary);
+        }
+        
+        /* Hero Section */
+        .hero {
+            background: linear-gradient(rgba(44, 62, 80, 0.8), rgba(44, 62, 80, 0.8)), url('https://images.unsplash.com/photo-1519925610903-381054cc2a1c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1770&q=80');
+            background-size: cover;
+            background-position: center;
+            color: white;
+            padding: 4rem 0;
+            text-align: center;
+        }
+        
+        .hero-content {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        
+        .hero h1 {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+        
+        .hero p {
+            font-size: 1.2rem;
+            margin-bottom: 2rem;
+        }
+        
+        .stats {
+            display: flex;
+            justify-content: center;
+            gap: 2rem;
+            margin: 2rem 0;
+        }
+        
+        .stat-item {
+            background: rgba(255, 255, 255, 0.1);
+            padding: 1rem 2rem;
+            border-radius: 8px;
+            backdrop-filter: blur(10px);
+        }
+        
+        .stat-number {
+            font-size: 2rem;
+            font-weight: 700;
+            color: var(--secondary);
+        }
+        
+        /* Lottery Codes Section */
+        .section-title {
+            text-align: center;
+            margin: 3rem 0 2rem;
+            color: var(--dark);
+            position: relative;
+        }
+        
+        .section-title:after {
+            content: '';
+            display: block;
+            width: 80px;
+            height: 4px;
+            background: var(--primary);
+            margin: 10px auto;
+            border-radius: 2px;
+        }
+        
+        .time-slots {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .time-btn {
+            padding: 0.8rem 1.5rem;
+            background: white;
+            border: 2px solid var(--primary);
+            border-radius: 30px;
+            cursor: pointer;
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .time-btn.active {
+            background: var(--primary);
+            color: white;
+        }
+        
+        .codes-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+            gap: 15px;
+            margin: 2rem 0;
+        }
+        
+        .code-item {
+            background: white;
+            border-radius: 8px;
+            padding: 15px 10px;
+            text-align: center;
+            box-shadow: var(--shadow);
+            transition: transform 0.3s;
+            cursor: pointer;
+        }
+        
+        .code-item:hover {
+            transform: translateY(-5px);
+        }
+        
+        .code-number {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: var(--dark);
+            margin-bottom: 10px;
+        }
+        
+        .code-status {
+            display: inline-block;
+            padding: 4px 8px;
+            border-radius: 20px;
+            font-size: 0.8rem;
+            font-weight: 600;
+        }
+        
+        .available {
+            background-color: #e8f5e9;
+            color: var(--secondary);
+        }
+        
+        .sold {
+            background-color: #ffebee;
+            color: var(--accent);
+        }
+        
+        /* Winner Section */
+        .winner-section {
+            background: linear-gradient(135deg, var(--dark), #34495e);
+            color: white;
+            padding: 3rem 0;
+            text-align: center;
+        }
+        
+        .winner-card {
+            background: rgba(255, 255, 255, 0.1);
+            max-width: 400px;
+            margin: 0 auto;
+            padding: 2rem;
+            border-radius: 12px;
+            backdrop-filter: blur(10px);
+            box-shadow: var(--shadow);
+        }
+        
+        .winner-name {
+            font-size: 1.8rem;
+            margin: 1rem 0;
+            color: var(--secondary);
+        }
+        
+        .winner-code {
+            font-size: 2.5rem;
+            font-weight: 700;
+            letter-spacing: 4px;
+            margin: 1rem 0;
+            color: white;
+        }
+        
+        /* Countdown Timer */
+        .countdown {
+            display: flex;
+            justify-content: center;
+            gap: 1rem;
+            margin: 2rem 0;
+        }
+        
+        .countdown-item {
+            background: white;
+            color: var(--dark);
+            padding: 1rem;
+            border-radius: 8px;
+            min-width: 80px;
+            box-shadow: var(--shadow);
+        }
+        
+        .countdown-number {
+            font-size: 2rem;
+            font-weight: 700;
+        }
+        
+        .countdown-label {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+        }
+        
+        /* Footer */
+        footer {
+            background-color: var(--dark);
+            color: white;
+            padding: 2rem 0;
+            margin-top: 3rem;
+        }
+        
+        .footer-content {
+            display: flex;
+            justify-content: space-between;
+            flex-wrap: wrap;
+        }
+        
+        .footer-section {
+            flex: 1;
+            min-width: 250px;
+            margin-bottom: 1.5rem;
+        }
+        
+        .footer-section h3 {
+            margin-bottom: 1rem;
+            position: relative;
+            padding-bottom: 0.5rem;
+        }
+        
+        .footer-section h3:after {
+            content: '';
+            position: absolute;
+            bottom: 0;
+            left: 0;
+            width: 50px;
+            height: 3px;
+            background: var(--primary);
+        }
+        
+        .footer-bottom {
+            text-align: center;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+        }
+        
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .header-content {
+                flex-direction: column;
+                text-align: center;
+            }
+            
+            nav ul {
+                margin: 1rem 0;
+            }
+            
+            .stats {
+                flex-direction: column;
+                gap: 1rem;
+            }
+            
+            .hero h1 {
+                font-size: 2.2rem;
+            }
+            
+            .codes-grid {
+                grid-template-columns: repeat(auto-fill, minmax(100px, 1fr));
+            }
+            
+            .time-slots {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+        
+        /* Modal Styles */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            z-index: 1000;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .modal-content {
+            background: white;
+            padding: 2rem;
+            border-radius: 8px;
+            width: 90%;
+            max-width: 500px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+        }
+        
+        .modal-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.5rem;
+        }
+        
+        .close-modal {
+            background: none;
+            border: none;
+            font-size: 1.5rem;
+            cursor: pointer;
+            color: var(--dark);
+        }
+        
+        .form-group {
+            margin-bottom: 1.2rem;
+        }
+        
+        .form-group label {
+            display: block;
+            margin-bottom: 0.5rem;
+            font-weight: 600;
+        }
+        
+        .form-group input {
+            width: 100%;
+            padding: 0.8rem;
+            border: 1px solid #ddd;
+            border-radius: 4px;
+            font-size: 1rem;
+        }
+        
+        /* Payment Methods */
+        .payment-methods {
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .payment-method {
+            display: flex;
+            align-items: center;
+            padding: 1rem;
+            border: 2px solid #ddd;
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .payment-method:hover {
+            border-color: var(--primary);
+        }
+        
+        .payment-method.selected {
+            border-color: var(--primary);
+            background-color: #e3f2fd;
+        }
+        
+        .payment-method img {
+            width: 50px;
+            margin-right: 1rem;
+        }
+        
+        /* Admin Panel */
+        .admin-panel {
+            background: white;
+            border-radius: 8px;
+            padding: 2rem;
+            margin: 2rem 0;
+            box-shadow: var(--shadow);
+        }
+        
+        .admin-controls {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin: 2rem 0;
+        }
+        
+        .control-card {
+            background: var(--light);
+            padding: 1.5rem;
+            border-radius: 8px;
+            text-align: center;
+        }
+        
+        /* Tabs */
+        .tabs {
+            display: flex;
+            margin-bottom: 1.5rem;
+            border-bottom: 2px solid #eee;
+        }
+        
+        .tab-btn {
+            padding: 0.8rem 1.5rem;
+            background: none;
+            border: none;
+            cursor: pointer;
+            font-weight: 600;
+            color: var(--dark);
+            opacity: 0.7;
+            transition: all 0.3s;
+        }
+        
+        .tab-btn.active {
+            opacity: 1;
+            border-bottom: 3px solid var(--primary);
+        }
+        
+        .tab-content {
+            display: none;
+        }
+        
+        .tab-content.active {
+            display: block;
+        }
+        
+        /* User Dashboard */
+        .user-codes {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+            gap: 1rem;
+            margin: 1.5rem 0;
+        }
+        
+        .user-code {
+            background: white;
+            padding: 1rem;
+            border-radius: 8px;
+            text-align: center;
+            box-shadow: var(--shadow);
+        }
+        
+        /* QR Code */
+        .qr-code {
+            width: 120px;
+            height: 120px;
+            background: #f5f5f5;
+            margin: 1rem auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 8px;
+        }
+        
+        /* Animation */
+        @keyframes pulse {
+            0% { transform: scale(1); }
+            50% { transform: scale(1.05); }
+            100% { transform: scale(1); }
+        }
+        
+        .pulse {
+            animation: pulse 2s infinite;
+        }
+        
+        /* Payment Success Animation */
+        @keyframes success {
+            0% { transform: scale(0.8); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        
+        .success-animation {
+            animation: success 0.5s ease-out;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-dice"></i>
+                Lucky Draw
+            </div>
+            <nav>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#catalog">Buy Codes</a></li>
+                    <li><a href="#winners">Winners</a></li>
+                    <li><a href="#about">About</a></li>
+                </ul>
+            </nav>
+            <div class="auth-buttons">
+                <button class="btn btn-outline" onclick="openModal('loginModal')">Login</button>
+                <button class="btn btn-primary" onclick="openModal('registerModal')">Register</button>
+            </div>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero" id="home">
+        <div class="container hero-content">
+            <h1>Win ₹1000 with just ₹10!</h1>
+            <p>Purchase a lottery code for a chance to win the grand prize. Draws held regularly with guaranteed winners!</p>
+            <button class="btn btn-primary" onclick="scrollToCatalog()">Buy Now</button>
+            
+            <div class="stats">
+                <div class="stat-item">
+                    <div class="stat-number">₹1000</div>
+                    <div>Prize Money</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">327</div>
+                    <div>Codes Sold</div>
+                </div>
+                <div class="stat-item">
+                    <div class="stat-number">673</div>
+                    <div>Codes Left</div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Lottery Codes Section -->
+    <section class="container" id="catalog">
+        <h2 class="section-title">Available Lottery Codes</h2>
+        <p style="text-align: center; margin-bottom: 1.5rem;">Each code costs ₹10. Select one to purchase.</p>
+        
+        <!-- Time Slot Selection -->
+        <div class="time-slots">
+            <button class="time-btn active" data-time="morning">Morning (8:00 AM - 12:00 PM)</button>
+            <button class="time-btn" data-time="afternoon">Afternoon (12:00 PM - 4:00 PM)</button>
+            <button class="time-btn" data-time="evening">Evening (4:00 PM - 8:00 PM)</button>
+        </div>
+        
+        <div class="codes-grid" id="codesContainer">
+            <!-- Codes will be loaded here based on time selection -->
+        </div>
+        
+        <div style="text-align: center; margin: 2rem 0;">
+            <button class="btn btn-primary">Load More Codes</button>
+        </div>
+    </section>
+
+    <!-- Countdown Timer -->
+    <section class="container">
+        <h2 class="section-title">Next Draw In</h2>
+        <div class="countdown">
+            <div class="countdown-item">
+                <div class="countdown-number" id="days">03</div>
+                <div class="countdown-label">Days</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="hours">12</div>
+                <div class="countdown-label">Hours</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="minutes">45</div>
+                <div class="countdown-label">Minutes</div>
+            </div>
+            <div class="countdown-item">
+                <div class="countdown-number" id="seconds">30</div>
+                <div class="countdown-label">Seconds</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Winner Section -->
+    <section class="winner-section" id="winners">
+        <div class="container">
+            <h2 class="section-title" style="color: white;">Latest Winner</h2>
+            
+            <div class="winner-card">
+                <i class="fas fa-trophy" style="font-size: 3rem; color: var(--secondary);"></i>
+                <div class="winner-name">Karuna Pandey</div>
+                <div class="winner-code">#0187</div>
+                <p>won ₹1000 on sitambur 15, 2025</p>
+                
+                <div class="qr-code">
+                    <i class="fas fa-qrcode" style="font-size: 3rem; color: #777;"></i>
+                </div>
+            </div>
+            
+            
+        </div>
+        
+    </section>
+
+    <!-- Admin Panel (Hidden by default, shown when admin logs in) -->
+    <section class="container" id="adminPanel" style="display: none;">
+        <h2 class="section-title">Admin Panel</h2>
+        
+        <div class="admin-panel">
+            <div class="admin-controls">
+                <div class="control-card">
+                    <h3>Total Users</h3>
+                    <div class="stat-number">142</div>
+                </div>
+                <div class="control-card">
+                    <h3>Codes Sold</h3>
+                    <div class="stat-number">327</div>
+                </div>
+                <div class="control-card">
+                    <h3>Revenue</h3>
+                    <div class="stat-number">₹3270</div>
+                </div>
+            </div>
+            
+            <div class="tabs">
+                <button class="tab-btn active" onclick="switchTab('usersTab')">Users</button>
+                <button class="tab-btn" onclick="switchTab('codesTab')">Codes</button>
+                <button class="tab-btn" onclick="switchTab('drawsTab')">Draws</button>
+            </div>
+            
+            <div id="usersTab" class="tab-content active">
+                <h3>User Management</h3>
+                <p>List of all registered users with their purchase history.</p>
+                <!-- User table would be here -->
+            </div>
+            
+            <div id="codesTab" class="tab-content">
+                <h3>Code Management</h3>
+                <p>View and manage all lottery codes.</p>
+                <!-- Code management interface would be here -->
+            </div>
+            
+            <div id="drawsTab" class="tab-content">
+                <h3>Draw Management</h3>
+                <p>Conduct new draws and view past draw history.</p>
+                <button class="btn btn-primary" style="margin-top: 1rem;">Conduct Draw Now</button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container footer-content">
+            <div class="footer-section">
+                <h3>Lucky Draw Lottery</h3>
+                <p>The best platform to try your luck and win amazing cash prizes with minimal investment.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Quick Links</h3>
+                <ul>
+                    <li><a href="#home">Home</a></li>
+                    <li><a href="#catalog">Buy Codes</a></li>
+                    <li><a href="#winners">Winners</a></li>
+                    <li><a href="#about">About Us</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Contact Us</h3>
+                <p><i class="fas fa-envelope"></i> meetech01@gmail.com</p>
+                <p><i class="fas fa-phone"></i> +91 6205967433</p>
+            </div>
+        </div>
+        <div class="container footer-bottom">
+            <!-- <p>&copy; 2023 Lucky Draw Lottery. All rights reserved.</p> -->
+             <p>2025 Lucky Draw Lottery. All rights reserved</p>
+        </div>
+    </footer>
+
+    <!-- Login Modal -->
+    <div class="modal" id="loginModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Login</h2>
+                <button class="close-modal" onclick="closeModal('loginModal')">&times;</button>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="loginEmail">Email</label>
+                    <input type="email" id="loginEmail" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="loginPassword">Password</label>
+                    <input type="password" id="loginPassword" placeholder="Enter your password">
+                </div>
+                <button type="button" class="btn btn-primary" style="width: 100%;">Login</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">
+                Don't have an account? <a href="#" style="color: var(--primary);" onclick="closeModal('loginModal'); openModal('registerModal')">Register</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Register Modal -->
+    <div class="modal" id="registerModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Register</h2>
+                <button class="close-modal" onclick="closeModal('registerModal')">&times;</button>
+            </div>
+            <form>
+                <div class="form-group">
+                    <label for="registerName">Full Name</label>
+                    <input type="text" id="registerName" placeholder="Enter your full name">
+                </div>
+                <div class="form-group">
+                    <label for="registerEmail">Email</label>
+                    <input type="email" id="registerEmail" placeholder="Enter your email">
+                </div>
+                <div class="form-group">
+                    <label for="registerPassword">Password</label>
+                    <input type="password" id="registerPassword" placeholder="Create a password">
+                </div>
+                <div class="form-group">
+                    <label for="registerConfirm">Confirm Password</label>
+                    <input type="password" id="registerConfirm" placeholder="Confirm your password">
+                </div>
+                <button type="button" class="btn btn-primary" style="width: 100%;">Register</button>
+            </form>
+            <p style="text-align: center; margin-top: 1rem;">
+                Already have an account? <a href="#" style="color: var(--primary);" onclick="closeModal('registerModal'); openModal('loginModal')">Login</a>
+            </p>
+        </div>
+    </div>
+
+    <!-- Payment Modal -->
+    <div class="modal" id="paymentModal">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Complete Payment</h2>
+                <button class="close-modal" onclick="closeModal('paymentModal')">&times;</button>
+            </div>
+            
+            <div style="text-align: center; margin-bottom: 1.5rem;">
+                <h3>You're purchasing lottery code: <span id="selectedCode" style="color: var(--primary);">#0245</span></h3>
+                <p>Total Amount: <strong>₹10</strong></p>
+            </div>
+            
+            <div class="payment-methods">
+                <div class="payment-method" onclick="selectPayment(this)">
+                    <img src="icons8-phone-pe-48.png" alt="PhonePe">
+                    <div>
+                        <h4>PhonePe</h4>
+                        <p>Pay using UPI, Wallet or Debit/Credit Card</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment(this)">
+                    <img src="icons8-google-pay-48.png" alt="Google Pay">
+                    <div>
+                        <h4>Google Pay</h4>
+                        <p>Pay using UPI or Bank Account</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment(this)">
+                    <img src="icons8-paypal-48.png" alt="PayPal">
+                    <div>
+                        <h4>PayPal</h4>
+                        <p>Pay using PayPal account</p>
+                    </div>
+                </div>
+                
+                <div class="payment-method" onclick="selectPayment(this)">
+                    <img src="atm-card.png" alt="Credit Card">
+                    <div>
+                        <h4>Credit/Debit Card</h4>
+                        <p>Pay using your card</p>
+                    </div>
+                </div>
+            </div>
+            
+            <button type="button" class="btn btn-primary" style="width: 100%; margin-top: 1.5rem;" onclick="processPayment()">Pay Now</button>
+        </div>
+    </div>
+
+    <!-- Payment Success Modal -->
+    <div class="modal" id="successModal">
+        <div class="modal-content success-animation">
+            <div style="text-align: center; padding: 2rem;">
+                <i class="fas fa-check-circle" style="font-size: 4rem; color: var(--secondary);"></i>
+                <h2 style="margin: 1rem 0; color: var(--secondary);">Payment Successful!</h2>
+                <p>You have successfully purchased lottery code <strong id="purchasedCode">#0245</strong></p>
+                <p>Good luck for the draw!</p>
+                <button class="btn btn-primary" style="margin-top: 1.5rem;" onclick="closeModal('successModal')">Continue</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Modal functionality
+        function openModal(modalId) {
+            document.getElementById(modalId).style.display = 'flex';
+        }
+        
+        function closeModal(modalId) {
+            document.getElementById(modalId).style.display = 'none';
+        }
+        
+        // Close modal when clicking outside
+        window.onclick = function(event) {
+            if (event.target.classList.contains('modal')) {
+                event.target.style.display = 'none';
+            }
+        }
+        
+        // Tab switching
+        function switchTab(tabId) {
+            // Hide all tab contents
+            document.querySelectorAll('.tab-content').forEach(tab => {
+                tab.classList.remove('active');
+            });
+            
+            // Deactivate all tab buttons
+            document.querySelectorAll('.tab-btn').forEach(btn => {
+                btn.classList.remove('active');
+            });
+            
+            // Activate selected tab
+            document.getElementById(tabId).classList.add('active');
+            event.currentTarget.classList.add('active');
+        }
+        
+        // Countdown timer
+        function updateCountdown() {
+            // Set the date we're counting down to (3 days from now)
+            const countDownDate = new Date();
+            countDownDate.setDate(countDownDate.getDate() + 3);
+            countDownDate.setHours(12, 0, 0, 0);
+            
+            // Update the count down every 1 second
+            const countdownFunction = setInterval(function() {
+                // Get today's date and time
+                const now = new Date().getTime();
+                
+                // Find the distance between now and the count down date
+                const distance = countDownDate - now;
+                
+                // Time calculations for days, hours, minutes and seconds
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+                
+                // Display the result
+                document.getElementById("days").innerHTML = days.toString().padStart(2, '0');
+                document.getElementById("hours").innerHTML = hours.toString().padStart(2, '0');
+                document.getElementById("minutes").innerHTML = minutes.toString().padStart(2, '0');
+                document.getElementById("seconds").innerHTML = seconds.toString().padStart(2, '0');
+                
+                // If the count down is finished, reset it
+                if (distance < 0) {
+                    clearInterval(countdownFunction);
+                    // Reset to 3 days
+                    updateCountdown();
+                }
+            }, 1000);
+        }
+        
+        // Initialize countdown on page load
+        updateCountdown();
+        
+        // Simulate admin login for demonstration
+        function simulateAdminLogin() {
+            document.getElementById('adminPanel').style.display = 'block';
+            alert('Admin view activated for demonstration purposes. In a real application, this would require proper authentication.');
+        }
+        
+        // Generate lottery codes based on time of day
+        function generateCodes(timeSlot) {
+            const codesContainer = document.getElementById('codesContainer');
+            codesContainer.innerHTML = '';
+            
+            // Define code ranges for each time slot
+            const codeRanges = {
+                morning: { start: 100, end: 132 },
+                afternoon: { start: 200, end: 232 },
+                evening: { start: 300, end: 332 }
+            };
+            
+            const range = codeRanges[timeSlot];
+            
+            for (let i = range.start; i <= range.end; i++) {
+                const codeItem = document.createElement('div');
+                codeItem.className = 'code-item';
+                
+                // Randomly set some codes as sold
+                const isSold = Math.random() > 0.7;
+                
+                codeItem.innerHTML = `
+                    <div class="code-number">#${i.toString().padStart(4, '0')}</div>
+                    <div class="code-status ${isSold ? 'sold' : 'available'}">${isSold ? 'Sold' : 'Available'}</div>
+                `;
+                
+                if (!isSold) {
+                    codeItem.addEventListener('click', () => {
+                        document.getElementById('selectedCode').textContent = `#${i.toString().padStart(4, '0')}`;
+                        openModal('paymentModal');
+                    });
+                }
+                
+                codesContainer.appendChild(codeItem);
+            }
+        }
+        
+        // Initialize with morning codes
+        generateCodes('morning');
+        
+        // Add event listeners to time slot buttons
+        document.querySelectorAll('.time-btn').forEach(button => {
+            button.addEventListener('click', function() {
+                document.querySelectorAll('.time-btn').forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+                generateCodes(this.dataset.time);
+            });
+        });
+        
+        // Payment method selection
+        function selectPayment(element) {
+            document.querySelectorAll('.payment-method').forEach(method => {
+                method.classList.remove('selected');
+            });
+            element.classList.add('selected');
+        }
+        
+        // Process payment
+        function processPayment() {
+            const selectedMethod = document.querySelector('.payment-method.selected');
+            if (!selectedMethod) {
+                alert('Please select a payment method');
+                return;
+            }
+            
+            // Simulate payment processing
+            closeModal('paymentModal');
+            
+            // Show success message after a short delay
+            setTimeout(() => {
+                const code = document.getElementById('selectedCode').textContent;
+                document.getElementById('purchasedCode').textContent = code;
+                openModal('successModal');
+                
+                // Update the code status to sold
+                updateCodeStatus(code);
+            }, 1000);
+        }
+        
+        // Update code status after purchase
+        function updateCodeStatus(code) {
+            const codeItems = document.querySelectorAll('.code-item');
+            codeItems.forEach(item => {
+                const codeNumber = item.querySelector('.code-number').textContent;
+                if (codeNumber === code) {
+                    const status = item.querySelector('.code-status');
+                    status.textContent = 'Sold';
+                    status.className = 'code-status sold';
+                    item.style.cursor = 'default';
+                    item.onclick = null;
+                }
+            });
+        }
+        
+        // Scroll to catalog
+        function scrollToCatalog() {
+            document.getElementById('catalog').scrollIntoView({ behavior: 'smooth' });
+        }
+        
+        // Uncomment the line below to simulate admin login by default for demonstration
+        // simulateAdminLogin();
+    </script>
+</body>
+</html>
